@@ -109,7 +109,7 @@ function Section1({ scrollYProgress }) {
         <div className="absolute top-60 -left-20">
           <CircleSec1 text="Raihan Yusuf • ehancup •" size={200} />
         </div>
-        <div className="absolute top-[25rem] -right-40 origin-left w-60">
+        <div className="absolute bottom-[25rem] -right-40 origin-left w-60">
           <motion.p
             style={{ rotate: rotate2 }}
             className="font-roslindale-reg text-5xl text-greyal leading-snug text-left origin-left"
@@ -236,7 +236,7 @@ function Section2({ scrollYProgress }) {
 }
 
 const CODING =
-  "<h1>Fatum Brutum Amor Fati</h1> ipsum dolor sit amet consectetur adipisicing elit. Ex quod cumque, itaque distinctio dicta deleniti voluptas, non porro inventore ducimus nihil doloremque, ipsam odio. Laudantium necessitatibus atque esse dicta ad.";
+  "<h1>Fatum Brutum Amor Fati</h1> tai dolor sit amet consectetur adipisicing elit. Ex quod cumque, itaque distinctio dicta deleniti voluptas, non porro inventore ducimus nihil doloremque, ipsam odio. Laudantium necessitatibus atque esse dicta ad.";
 
 function Section3({ backgroundColor, setop }) {
   const ref = useRef(null);
