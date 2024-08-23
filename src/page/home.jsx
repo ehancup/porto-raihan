@@ -471,8 +471,8 @@ function Section4({ backgroundColor }) {
   }, []);
 
   // const backgroundColor = useTransform(scrollYProgress, [0,1], ["#252222", "#f7f7ef"])
-  const transImage = useTransform(transP, [0,0.5,1], [500,0,-500])
-  const transText = useTransform(transP, [0,0.5,1], [300,0,-300])
+  const transImage = useTransform(transP, [0, 0.5, 1], [500, 0, -500]);
+  const transText = useTransform(transP, [0, 0.5, 1], [300, 0, -300]);
 
   const currentIndex = useTransform(carouselProgress, [0, 1], [1, 94]);
 
@@ -519,7 +519,10 @@ function Section4({ backgroundColor }) {
     });
   }, [currentIndex, render]);
   return (
-    <motion.section className="h-[500vh] w-full relative bg-red-500" ref={carouselRef}>
+    <motion.section
+      className="h-[500vh] w-full relative bg-red-500"
+      ref={carouselRef}
+    >
       <motion.div
         style={{ backgroundColor }}
         ref={ref}
@@ -530,7 +533,10 @@ function Section4({ backgroundColor }) {
           className=" origin-right absolute w-full top-0 h-2 bg-greyal inset-x-0"
         ></motion.div>
         <div className=" flex flex-col w-full items-center justify-center gap-10">
-          <motion.div style={{translateY: transText}} className="flex flex-row flex-wrap items-center gap-x-3 gap-y-2 justify-start text-greyal text-7xl font-roslindale-reg">
+          <motion.div
+            style={{ translateY: transText }}
+            className="flex flex-row flex-wrap items-center gap-x-3 gap-y-2 justify-start text-greyal text-7xl font-roslindale-reg"
+          >
             {words.map((word, i) => {
               const start = i / words.length;
               const end = start + 1 / words.length;
@@ -546,8 +552,11 @@ function Section4({ backgroundColor }) {
             })}
           </motion.div>
           <div className="w-full px-96">
-            <motion.div style={{translateY: transImage}} className="aspect-video w-full bg-greyal rounded-xl overflow-hidden shadow-2xl">
-            <canvas className="w-full h-full" ref={canvasRef}></canvas>
+            <motion.div
+              style={{ translateY: transImage }}
+              className="aspect-video w-full bg-greyal rounded-xl overflow-hidden shadow-2xl"
+            >
+              <canvas className="w-full h-full" ref={canvasRef}></canvas>
             </motion.div>
           </div>
         </div>
@@ -555,7 +564,7 @@ function Section4({ backgroundColor }) {
     </motion.section>
   );
 }
-function Trippy({setop}) {
+function Trippy({ setop }) {
   const trippyRef = useRef(null);
   const bgRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -564,8 +573,8 @@ function Trippy({setop}) {
     // smooth: 20
   });
   useEffect(() => {
-    scrollYProgress.on('change', (value) => setop(1-value))
-  })
+    scrollYProgress.on("change", (value) => setop(1 - value));
+  });
   const scale = useTransform(scrollYProgress, [0.02, 0.5, 1], [1, 50, 119]);
   const translateY = useTransform(scrollYProgress, [0.02, 1], [0, 4000]);
   const { scrollYProgress: bgYProgress } = useScroll({
@@ -599,7 +608,7 @@ function Trippy({setop}) {
 const WORDS =
   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quod cumque, itaque distinctio dicta deleniti voluptas, non porro inventore ducimus nihil doloremque, ipsam odio. Laudantium necessitatibus atque esse dicta ad.";
 
-function Highlight({backgroundColor}) {
+function Highlight({ backgroundColor }) {
   const element = useRef(null);
   const words = WORDS.split(" ");
   const { scrollYProgress } = useScroll({
@@ -611,9 +620,9 @@ function Highlight({backgroundColor}) {
   });
   return (
     <motion.div
-    style={{
-      backgroundColor
-    }}
+      style={{
+        backgroundColor,
+      }}
       className="h-screen w-full grid place-items-center"
       ref={element}
     >
@@ -674,7 +683,7 @@ function Character({ scrollYProgress, range, children }) {
   );
 }
 
-function Horizontal({backgroundColor, setop}) {
+function Horizontal({ backgroundColor, setop }) {
   const targetRef = useRef(null);
   const carouselRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -687,18 +696,31 @@ function Horizontal({backgroundColor, setop}) {
   });
 
   useEffect(() => {
-    carouselProgress.on('change', (e) => setop(e))
-  })
+    carouselProgress.on("change", (e) => setop(e));
+  });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-90%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-100%"]);
   return (
     <section className="h-[400vh] w-full relative" ref={targetRef}>
-      <motion.div style={{backgroundColor}} className="h-screen w-full sticky top-0 flex items-center" ref={carouselRef}>
-        <motion.div style={{ x }} className="flex flex-row gap-20 flex-nowrap">
-          {Array.from({ length: 10 }, (_, i) => (
-            <ProjectCard key={i} />
-          ))}
-        </motion.div>
+      <motion.div
+        style={{ backgroundColor }}
+        className="h-screen w-full sticky top-0 flex items-center"
+        ref={carouselRef}
+      >
+        <div className="flex flex-col gap-20 ">
+          <div className="px-20">
+
+          <h1 className="text-white text-7xl font-roslindale-reg">My Projects</h1>
+          </div>
+          <motion.div
+            style={{ x }}
+            className="flex flex-row gap-20 flex-nowrap"
+          >
+            {Array.from({ length: 10 }, (_, i) => (
+              <ProjectCard key={i} />
+            ))}
+          </motion.div>
+        </div>
       </motion.div>
     </section>
   );
