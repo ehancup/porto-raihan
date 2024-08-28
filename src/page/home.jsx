@@ -13,6 +13,7 @@ import {
 import { ProjectCard } from "../components/projectCard";
 import { Loader } from "../components/loader";
 import useLoad from "../hook/load";
+import { projects } from "../data/projetcs";
 
 function Home() {
   const container = useRef(null);
@@ -38,7 +39,7 @@ function Home() {
     window.addEventListener("load", () => {
       setTimeout(() => {
         loadDone();
-      }, 3000);
+      }, 1000);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -582,7 +583,7 @@ function Trippy({ setop }) {
     offset: ["center end", "end end"],
   });
   return (
-    <div className="h-[600vh] bg-gray-600 z-0 relative top-0 " ref={trippyRef}>
+    <div className="h-[500vh] bg-gray-600 z-0 relative top-0 " ref={trippyRef}>
       <div
         className="h-screen bg-whiteal w-full sticky top-0  overflow-hidden"
         ref={bgRef}
@@ -716,8 +717,8 @@ function Horizontal({ backgroundColor, setop }) {
             style={{ x }}
             className="flex flex-row gap-20 flex-nowrap"
           >
-            {Array.from({ length: 10 }, (_, i) => (
-              <ProjectCard key={i} />
+            {projects.map( (k, i) => (
+              <ProjectCard key={i} {...k} />
             ))}
           </motion.div>
         </div>
