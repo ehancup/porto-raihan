@@ -14,6 +14,7 @@ import { ProjectCard } from "../components/projectCard";
 import { Loader } from "../components/loader";
 import useLoad from "../hook/load";
 import { projects } from "../data/projetcs";
+import { CertiCard } from "../components/certiCard";
 
 function Home() {
   const container = useRef(null);
@@ -71,7 +72,7 @@ function Home() {
           <Section4 backgroundColor={backgroundColor} />
           <Trippy setop={setop} />
           <Horizontal backgroundColor={backgroundColor} setop={setop} />
-          <Highlight backgroundColor={backgroundColor} />
+          <Certificate backgroundColor={backgroundColor} />
           {/* <div className="h-screen"></div> */}
         </div>
       </div>
@@ -111,7 +112,7 @@ function Section1({ scrollYProgress }) {
           style={{ translateY }}
           src={people1}
           alt="person"
-          className="h-full  object-cover"
+          className="h-full  object-contain max-w-[804px]"
         />
         <div className="absolute top-60 -left-20">
           <CircleSec1 text="Raihan Yusuf • ehancup •" size={200} />
@@ -243,7 +244,7 @@ function Section2({ scrollYProgress }) {
 }
 
 const CODING =
-  "I can code in several languages adn master several framework. So, just contact me if U need something";
+  "I can code in several languages and master several framework. So, just contact me if U need something";
 
 function Section3({ backgroundColor, setop }) {
   const ref = useRef(null);
@@ -552,7 +553,7 @@ function Section4({ backgroundColor }) {
               );
             })}
           </motion.div>
-          <div className="w-full px-96">
+          <div className="w-full px-12 max-w-[965px]">
             <motion.div
               style={{ translateY: transImage }}
               className="aspect-video w-full bg-greyal rounded-xl overflow-hidden shadow-2xl"
@@ -578,6 +579,7 @@ function Trippy({ setop }) {
   });
   const scale = useTransform(scrollYProgress, [0.02, 0.5, 1], [1, 50, 119]);
   const translateY = useTransform(scrollYProgress, [0.02, 1], [0, 4000]);
+  const translateX = useTransform(scrollYProgress, [0.02, 1], [0, 45]);
   const { scrollYProgress: bgYProgress } = useScroll({
     target: bgRef,
     offset: ["center end", "end end"],
@@ -589,7 +591,7 @@ function Trippy({ setop }) {
         ref={bgRef}
       >
         <motion.div
-          style={{ scale, translateY }}
+          style={{ scale, translateY, translateX }}
           className="w-full h-full grid place-items-center"
         >
           <motion.p
@@ -709,21 +711,39 @@ function Horizontal({ backgroundColor, setop }) {
         ref={carouselRef}
       >
         <div className="flex flex-col gap-20 ">
-          <div className="px-20">
-
-          <h1 className="text-white text-7xl font-roslindale-reg">My Projects</h1>
+          <div className="pl-44">
+            <h1 className="text-white text-7xl font-roslindale-reg">
+              My Projects
+            </h1>
           </div>
           <motion.div
             style={{ x }}
-            className="flex flex-row gap-20 flex-nowrap"
+            className="flex flex-row gap-20 flex-nowrap pl-24"
           >
-            {projects.map( (k, i) => (
+            {projects.map((k, i) => (
               <ProjectCard key={i} {...k} />
             ))}
           </motion.div>
         </div>
       </motion.div>
     </section>
+  );
+}
+
+function Certificate({ backgroundColor }) {
+  return (
+    <motion.section
+      style={{ backgroundColor }}
+      className="min-h-screen w-full px-44 pt-44 flex flex-row justify-between"
+    >
+      <div className="">
+        <h1 className="font-roslindale-reg text-7xl text-greyal">Certificate</h1>
+      </div>
+      <div className="flex flex-col">
+        <CertiCard/>
+        <CertiCard/>
+      </div>
+    </motion.section>
   );
 }
 export default Home;
