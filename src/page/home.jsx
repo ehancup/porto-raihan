@@ -48,7 +48,7 @@ function Home() {
   console.log("zustand===============");
   console.log(op);
   return (
-    <div className="overflow-x-clip bg-whiteal relative">
+    <div className="overflow-x-clip bg-whiteal relative scrollbar-thumb-greyal scrollbar-track-whiteal scrollbar-thin">
       {/* <motion.div
         style={{ opacity: op }}
         className="h-full w-full bg-greyal absolute inset-0  "
@@ -73,6 +73,7 @@ function Home() {
           <Trippy setop={setop} />
           <Horizontal backgroundColor={backgroundColor} setop={setop} />
           <Certificate backgroundColor={backgroundColor} />
+          <Footer />
           {/* <div className="h-screen"></div> */}
         </div>
       </div>
@@ -372,7 +373,7 @@ function Section3({ backgroundColor, setop }) {
       ref={carouselRef}
     >
       <div
-        className="h-screen sticky top-0 flex flex-row items-center px-44 gap-20"
+        className="h-screen sticky top-0 flex flex-row items-center px-44 gap-20 "
         ref={ref}
       >
         <motion.div
@@ -414,7 +415,12 @@ function Section3({ backgroundColor, setop }) {
           </div>
         </div>
         <motion.div
-          style={{ translateY: imageY }}
+          style={{
+            translateY: imageY,
+            backgroundImage: "url('/coding/1.webp')",
+            backgroundPosition: "center center",
+            backgroundSize: "cover",
+          }}
           className="w-96 aspect-[16/24] bg-whiteal overflow-hidden rounded-xl relative"
         >
           <canvas className="w-full h-full" ref={canvasRef}></canvas>
@@ -555,7 +561,12 @@ function Section4({ backgroundColor }) {
           </motion.div>
           <div className="w-full px-12 max-w-[965px]">
             <motion.div
-              style={{ translateY: transImage }}
+              style={{
+                translateY: transImage,
+                backgroundImage: "url('/edit/1.webp')",
+                backgroundPosition: "center center",
+                backgroundSize: "cover",
+              }}
               className="aspect-video w-full bg-greyal rounded-xl overflow-hidden shadow-2xl"
             >
               <canvas className="w-full h-full" ref={canvasRef}></canvas>
@@ -737,13 +748,93 @@ function Certificate({ backgroundColor }) {
       className="min-h-screen w-full px-44 pt-44 flex flex-row justify-between"
     >
       <div className="">
-        <h1 className="font-roslindale-reg text-7xl text-greyal">Certificate</h1>
+        <h1 className="font-roslindale-reg text-7xl text-greyal">
+          Certificate
+        </h1>
       </div>
       <div className="flex flex-col">
-        <CertiCard/>
-        <CertiCard/>
+        <CertiCard />
+        <CertiCard />
       </div>
     </motion.section>
+  );
+}
+
+function Footer() {
+  const trippyRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: trippyRef,
+    offset: ["start start", "end end"],
+    // smooth: 20
+  });
+
+  let footer = [
+    {
+      title: "Instagram",
+      href: "https://www.instagram.com/hancup._/",
+    },
+    {
+      title: "Github",
+      href: "https://github.com/ehancup",
+    },
+    {
+      title: "LinkedIn",
+      href: "https://www.linkedin.com/in/raihan-yusuf-firmansyah-8156ab265/",
+    },
+    {
+      title: "Twitter",
+      // href: "https://x.com/hancup_y",
+      href: "/CV_RAIHAN.pdf",
+    },
+  ];
+
+  const height = useTransform(scrollYProgress, [0, 1], ["100vh", "33vh"]);
+  const translateBottom = useTransform(scrollYProgress, [0, 1], [200, 0]);
+  const borderRadius = useTransform(scrollYProgress, [0, 1], ["0 0 50vw 50vw / 0 0 30vh 30vh", "0 0 0 0 / 0 0 0 0"]);
+  
+  return (
+    <div className="h-[200vh]" ref={trippyRef}>
+      <div className="h-screen bg-greyal flex flex-col sticky top-0 ">
+        <motion.div
+          className="absolute top-0 w-full h-screen bg-whiteal flex items-center justify-center origin-top "
+          style={{ height, borderRadius }}
+        >
+          <p className="text-8xl font-roslindale-reg text-greyal">
+            Let&apos;s work together!
+          </p>
+        </motion.div>
+        <div className="flex-1"></div>
+        <div className="flex-[2] flex flex-col justify-between px-20 py-10">
+          <div className="flex flex-row">
+            <div className="flex flex-col">
+              <p className=""></p>
+            </div>
+            
+          </div>
+          <motion.div
+            className="flex flex-row w-full justify-between"
+            style={{ translateY: translateBottom }}
+          >
+            <div className="flex flex-row gap-5">
+              {footer.map((data, i) => (
+                <div className="" key={i}>
+                  <a
+                    href={data.href}
+                    target="_blank"
+                    className=" text-whiteal opacity-50 font-varela hover:opacity-100 transition-opacity duration-150"
+                  >
+                    {data.title}
+                  </a>
+                </div>
+              ))}
+            </div>
+            <p className="text-whiteal/50 font-varela ">
+              Copyright &copy; 2024 Raihan Ltd. All Right reserved
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </div>
   );
 }
 export default Home;

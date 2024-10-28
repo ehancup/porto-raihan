@@ -25,15 +25,15 @@ let footer = [
   },
   {
     title: "Github",
-    href: "/",
+    href: "https://github.com/ehancup",
   },
   {
     title: "LinkedIn",
-    href: "/",
+    href: "https://www.linkedin.com/in/raihan-yusuf-firmansyah-8156ab265/",
   },
   {
     title: "Twitter",
-    href: "/",
+    href: "https://x.com/hancup_y",
   },
 ];
 
