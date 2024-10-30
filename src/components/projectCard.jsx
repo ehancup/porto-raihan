@@ -1,9 +1,10 @@
 import {assets} from "../assets/projects/index";
 import { Button } from "./btn";
+import { motion } from "framer-motion";
 
 export const ProjectCard = ({title, icons, image, route}) => {
   return (
-    <div className="w-96 aspect-[16/18] bg-green-700 overflow-hidden rounded-xl relative group/pcard">
+    <motion.div initial={{opacity: 0, y: 150}} whileInView={{opacity: 1, y: 0}} transition={{duration: 0.5, ease: "easeOut"}} className="w-96 aspect-[16/18] bg-green-700 overflow-hidden rounded-xl relative group/pcard">
       <img
         src={image}
         alt=""
@@ -33,6 +34,6 @@ export const ProjectCard = ({title, icons, image, route}) => {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

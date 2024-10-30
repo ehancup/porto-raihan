@@ -15,6 +15,8 @@ import { Loader } from "../components/loader";
 import useLoad from "../hook/load";
 import { projects } from "../data/projetcs";
 import { CertiCard } from "../components/certiCard";
+import useBlockScroll from "../hook/useBlockScroll";
+import NewButt from "../components/newButt";
 
 function Home() {
   const container = useRef(null);
@@ -31,17 +33,27 @@ function Home() {
 
   const isLoading = useLoad((state) => state.isLoad);
   const loadDone = useLoad((state) => state.loadDone);
+  const [blockScroll, allowScroll] = useBlockScroll()
 
   const setop = (value) => {
     op.set(value);
   };
 
   useEffect(() => {
-    window.addEventListener("load", () => {
+    blockScroll()
+
+    const onLoad = () => {
       setTimeout(() => {
+        allowScroll()
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
         loadDone();
       }, 1000);
-    });
+    }
+    window.addEventListener("load", onLoad);
+
+    return () => {
+      window.removeEventListener("load", onLoad)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -790,24 +802,32 @@ function Footer() {
 
   const height = useTransform(scrollYProgress, [0, 1], ["100vh", "33vh"]);
   const translateBottom = useTransform(scrollYProgress, [0, 1], [200, 0]);
+  const translateButton = useTransform(scrollYProgress, [0, 1], [500, 0]);
+  const borderButton = useTransform(scrollYProgress, [0, 1], [250, 0]);
+  const opacityButton = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const borderRadius = useTransform(scrollYProgress, [0, 1], ["0 0 50vw 50vw / 0 0 30vh 30vh", "0 0 0 0 / 0 0 0 0"]);
   
   return (
     <div className="h-[200vh]" ref={trippyRef}>
       <div className="h-screen bg-greyal flex flex-col sticky top-0 ">
         <motion.div
-          className="absolute top-0 w-full h-screen bg-whiteal flex items-center justify-center origin-top "
+          className="absolute top-0 w-full h-screen bg-whiteal flex items-center justify-center origin-top z-10 "
           style={{ height, borderRadius }}
         >
-          <p className="text-8xl font-roslindale-reg text-greyal">
+          <motion.p initial={{opacity: 0, y: 150}} whileInView={{opacity: 1, y: 0}} transition={{duration: 0.5, ease: "easeOut"}} className="text-8xl font-roslindale-reg text-greyal">
             Let&apos;s work together!
-          </p>
+          </motion.p>
         </motion.div>
         <div className="flex-1"></div>
         <div className="flex-[2] flex flex-col justify-between px-20 py-10">
-          <div className="flex flex-row">
-            <div className="flex flex-col">
-              <p className=""></p>
+          <div className="flex flex-row pt-32 justify-center">
+            <div className="flex flex-col w-fit">
+              <p className="text-whiteal font-roslindale-reg text-8xl  pb-5 pr-32">Ways to <br />Get in touch</p> 
+              <motion.div style={{ translateY: borderButton }} className="w-full h-[2px] bg-whiteal/35"></motion.div>
+              <motion.div  style={{ translateY: translateButton, opacity: opacityButton }} className="flex flex-row w-full gap-5 mt-5 ">
+                <NewButt title={"+62 812-9423-8988 (WA)"} href={'https://wa.link/st3kww'}/>
+                <NewButt title={"mondokskuy@gmail.com"} href={'mailto:mondokskuy19@gmail.com'}/>
+              </motion.div>
             </div>
             
           </div>

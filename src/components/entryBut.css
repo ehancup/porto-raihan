@@ -241,7 +241,8 @@
   }
   
   .container {
-    width: fit-content;
+    width: 240px;
+    box-sizing: border-box;
     height: fit-content;
     display: flex;
     flex-direction: column;
