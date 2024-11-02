@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useScroll, useTransform, motion, useMotionValue } from "framer-motion";
+import {
+  useScroll,
+  useTransform,
+  motion,
+  useMotionValue,
+  useAnimation,
+} from "framer-motion";
 import people1 from "../assets/people2.png";
 import avatar from "../assets/avatar.png";
 import { RunninText } from "../components/runninText";
@@ -17,6 +23,7 @@ import { projects } from "../data/projetcs";
 import { CertiCard } from "../components/certiCard";
 import useBlockScroll from "../hook/useBlockScroll";
 import NewButt from "../components/newButt";
+import { throttle } from "lodash";
 
 function Home() {
   const container = useRef(null);
@@ -33,27 +40,27 @@ function Home() {
 
   const isLoading = useLoad((state) => state.isLoad);
   const loadDone = useLoad((state) => state.loadDone);
-  const [blockScroll, allowScroll] = useBlockScroll()
+  const [blockScroll, allowScroll] = useBlockScroll();
 
   const setop = (value) => {
     op.set(value);
   };
 
   useEffect(() => {
-    blockScroll()
+    blockScroll();
 
     const onLoad = () => {
       setTimeout(() => {
-        allowScroll()
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+        allowScroll();
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         loadDone();
       }, 1000);
-    }
+    };
     window.addEventListener("load", onLoad);
 
     return () => {
-      window.removeEventListener("load", onLoad)
-    }
+      window.removeEventListener("load", onLoad);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -795,8 +802,8 @@ function Footer() {
     },
     {
       title: "Twitter",
-      // href: "https://x.com/hancup_y",
-      href: "/CV_RAIHAN.pdf",
+      href: "https://x.com/hancup_y",
+      // href: "/CV_RAIHAN.pdf",
     },
   ];
 
@@ -805,8 +812,50 @@ function Footer() {
   const translateButton = useTransform(scrollYProgress, [0, 1], [500, 0]);
   const borderButton = useTransform(scrollYProgress, [0, 1], [250, 0]);
   const opacityButton = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const borderRadius = useTransform(scrollYProgress, [0, 1], ["0 0 50vw 50vw / 0 0 30vh 30vh", "0 0 0 0 / 0 0 0 0"]);
-  
+  const borderRadius = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0 0 50vw 50vw / 0 0 30vh 30vh", "0 0 0 0 / 0 0 0 0"]
+  );
+
+  const buttonRef = useRef(null);
+  const controls = useAnimation();
+
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  // const x = useMotionValue(0);
+  // const y = useMotionValue(0);
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } =
+      buttonRef.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition((prev) => {
+      console.log(prev);
+      return { x: middleX, y: middleY };
+    });
+    // console.log({ middleX, middleY });
+    // controls.start({ x: middleX, y: middleY });
+  };
+
+  const reset = () => {
+    // x.set(0);
+    // y.set(0);
+    setIsHovered(false);
+    setPosition({ x: 0, y: 0 });
+    // controls.start({ x: 0, y: 0 });
+  };
+
+  // const { x, y } = position;
+
+  useEffect(() => {
+    console.log("Position:", position);
+    console.log("isHovered:", isHovered);
+  }, [position, isHovered]);
+
   return (
     <div className="h-[200vh]" ref={trippyRef}>
       <div className="h-screen bg-greyal flex flex-col sticky top-0 ">
@@ -814,22 +863,83 @@ function Footer() {
           className="absolute top-0 w-full h-screen bg-whiteal flex items-center justify-center origin-top z-10 "
           style={{ height, borderRadius }}
         >
-          <motion.p initial={{opacity: 0, y: 150}} whileInView={{opacity: 1, y: 0}} transition={{duration: 0.5, ease: "easeOut"}} className="text-8xl font-roslindale-reg text-greyal">
+          <motion.p
+            initial={{ opacity: 0, y: 150 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="text-8xl font-roslindale-reg text-greyal"
+          >
             Let&apos;s work together!
           </motion.p>
         </motion.div>
         <div className="flex-1"></div>
         <div className="flex-[2] flex flex-col justify-between px-20 py-10">
-          <div className="flex flex-row pt-32 justify-center">
+          <div className="flex flex-row pt-32 justify-center gap-10">
             <div className="flex flex-col w-fit">
-              <p className="text-whiteal font-roslindale-reg text-8xl  pb-5 pr-32">Ways to <br />Get in touch</p> 
-              <motion.div style={{ translateY: borderButton }} className="w-full h-[2px] bg-whiteal/35"></motion.div>
-              <motion.div  style={{ translateY: translateButton, opacity: opacityButton }} className="flex flex-row w-full gap-5 mt-5 ">
-                <NewButt title={"+62 812-9423-8988 (WA)"} href={'https://wa.link/st3kww'}/>
-                <NewButt title={"mondokskuy@gmail.com"} href={'mailto:mondokskuy19@gmail.com'}/>
+              <p className="text-whiteal font-roslindale-reg text-8xl  pb-5 pr-32">
+                Ways to <br />
+                Get in touch
+              </p>
+              <motion.div
+                style={{ translateY: borderButton }}
+                className="w-full h-[2px] bg-whiteal/35"
+              ></motion.div>
+              <motion.div
+                style={{ translateY: translateButton, opacity: opacityButton }}
+                className="flex flex-row w-full gap-5 mt-5 "
+              >
+                <NewButt
+                  title={"+62 812-9423-8988 (WA)"}
+                  href={"https://wa.link/st3kww"}
+                />
+                <NewButt
+                  title={"mondokskuy@gmail.com"}
+                  href={"mailto:mondokskuy19@gmail.com"}
+                />
               </motion.div>
             </div>
-            
+
+            <div className="">
+              <motion.a
+                href="/CV_RAIHAN.pdf"
+                target="_blank"
+                layout
+                ref={buttonRef}
+                // style={{ position: "relative", x, y }}
+                // initial={{ x: 0, y: 0 }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseMove={handleMouse}
+                onMouseLeave={reset}
+                animate={{
+                  x: isHovered ? position.x : 0,
+                  y: isHovered ? position.y : 0,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 150,
+                  damping: 15,
+                  mass: 0.1,
+                }}
+                className="w-52 h-52 bg-whiteal/50 rounded-full relative group/rdbtn flex items-center justify-center"
+              >
+                <div className="absolute  h-full w-full bg-whiteal rounded-full top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 origin-center scale-0 group-hover/rdbtn:scale-100 transition-all duration-300"></div>
+                <motion.p
+                  animate={{
+                    x: isHovered ? position.x * 0.3 : 0,
+                    y: isHovered ? position.y * 0.3 : 0,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 150,
+                    damping: 15,
+                    mass: 0.1,
+                  }}
+                  className="font-roslindale-reg text-greyal relative text-xl"
+                >
+                  download CV
+                </motion.p>
+              </motion.a>
+            </div>
           </div>
           <motion.div
             className="flex flex-row w-full justify-between"
