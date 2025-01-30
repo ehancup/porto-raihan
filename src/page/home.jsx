@@ -49,17 +49,24 @@ function Home() {
   useEffect(() => {
     blockScroll();
 
-    const onLoad = () => {
-      setTimeout(() => {
-        allowScroll();
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-        loadDone();
-      }, 1000);
+    const loadFunc = () => {
+      allowScroll();
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      loadDone();
     };
-    window.addEventListener("load", onLoad);
+
+    // const onLoad = () => {
+    setTimeout(() => {
+      allowScroll();
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      loadDone();
+    }, 3000);
+    // };
+    // window.addEventListener("load", onLoad);
 
     return () => {
-      window.removeEventListener("load", onLoad);
+      // window.removeEventListener("load", onLoad);
+      // clearTimeout(loadDone)
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -607,9 +614,9 @@ function Trippy({ setop }) {
   useEffect(() => {
     scrollYProgress.on("change", (value) => setop(1 - value));
   });
-  const scale = useTransform(scrollYProgress, [0.02, 0.5, 1], [1, 50, 119]);
+  const scale = useTransform(scrollYProgress, [0.02, 0.5, 1], [1, 50, 123.8]);
   const translateY = useTransform(scrollYProgress, [0.02, 1], [0, 4000]);
-  const translateX = useTransform(scrollYProgress, [0.02, 1], [0, 45]);
+  const translateX = useTransform(scrollYProgress, [0.02, 1], [0, 48]);
   const { scrollYProgress: bgYProgress } = useScroll({
     target: bgRef,
     offset: ["center end", "end end"],
