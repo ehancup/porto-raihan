@@ -1,6 +1,6 @@
 import { assets } from "../assets/projects"
 
-const {mediapipe, mysmk, fresh4u, blitz, editdok, indis, hangame,} = assets;
+const {mediapipe, mysmk, fresh4u, blitz, editdok, indis, hangame, boilerplate,} = assets;
 
 export const projects = [
     {
@@ -71,11 +71,11 @@ export const projects = [
         ]
     },
     {
-        title: "Hand Gesture Scrolling-System",
-        image: mediapipe,
+        title: "Gin-Gonic Boilerplate",
+        image: boilerplate,
         route: "/scrsystem",
         icons: [
-            "/icon/python-white.svg"
+            "/icon/go-white.svg"
         ]
     },
     {

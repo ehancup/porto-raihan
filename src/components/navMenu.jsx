@@ -7,7 +7,7 @@ let links = [
   },
   {
     title: "Projects",
-    href: "/",
+    href: "/projects",
   },
   {
     title: "Certificates",

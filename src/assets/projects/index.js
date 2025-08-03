@@ -5,6 +5,7 @@ import blitz from './blitz.png';
 import mysmk from './mysmk.png';
 import indis from './indiscoveries.png';
 import hangame from './hangame.png';
+import boilerplate from './boilerplate.png';
 
 export const assets = {
     mediapipe,
@@ -14,4 +15,5 @@ export const assets = {
     fresh4u,
     indis,
     hangame,
+    boilerplate
 };

@@ -7,6 +7,7 @@ import {
   useAnimation,
 } from "framer-motion";
 import people1 from "../assets/people2.png";
+import hp from "../assets/hp.png";
 import avatar from "../assets/avatar.png";
 import { RunninText } from "../components/runninText";
 import { CircleSec1 } from "../components/circleSec1";
@@ -16,6 +17,7 @@ import {
   MapPinIcon,
   DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
+import "../App.css";
 import { ProjectCard } from "../components/projectCard";
 import { Loader } from "../components/loader";
 import useLoad from "../hook/load";
@@ -24,6 +26,8 @@ import { CertiCard } from "../components/certiCard";
 import useBlockScroll from "../hook/useBlockScroll";
 import NewButt from "../components/newButt";
 import { throttle } from "lodash";
+import { certificates } from "../data/cetificate";
+import transition from "../transition.jsx";
 
 function Home() {
   const container = useRef(null);
@@ -74,36 +78,44 @@ function Home() {
   console.log("zustand===============");
   console.log(op);
   return (
-    <div className="overflow-x-clip bg-whiteal relative scrollbar-thumb-greyal scrollbar-track-whiteal scrollbar-thin">
-      {/* <motion.div
+    <motion.div className="" id="scrbr" initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} >
+      <div className="overflow-x-clip bg-whiteal relative ">
+        {/* <motion.div
         style={{ opacity: op }}
         className="h-full w-full bg-greyal absolute inset-0  "
       ></motion.div> */}
-      <div
-        className={`fixed h-screen w-full inset-x-0 ${
-          isLoading
-            ? "top-0 rounded-none"
-            : "-top-[100vh] rounded-[0%0%50%50%/0%0%30%30%]"
-        } grid place-items-center z-50 bg-greyal transition-all duration-700 md:duration-1000 ease-out`}
-      >
-        <Loader />
-      </div>
-      <div className="relative top-0">
-        <div className="relative" ref={container}>
-          <Section1 scrollYProgress={scrollYProgress} />
-          <Section2 scrollYProgress={scrollYProgress} />
+
+        <div
+          className={`fixed h-fit w-full inset-x-0 ${
+            isLoading ? "top-0 " : "-top-[100vh] "
+          } flex flex-col z-50  transition-all duration-700 md:duration-1000`}
+        >
+          <div className="w-full h-screen bg-greyal grid place-items-center">
+            <Loader />
+          </div>
+          <div
+            className={`w-full bg-greyal curve ${
+              isLoading ? "h-40" : "h-0"
+            } transition-all duration-700 md:duration-1000 ease-out`}
+          ></div>
         </div>
-        <div className="">
-          <Section3 backgroundColor={backgroundColor} setop={setop} />
-          <Section4 backgroundColor={backgroundColor} />
-          <Trippy setop={setop} />
-          <Horizontal backgroundColor={backgroundColor} setop={setop} />
-          <Certificate backgroundColor={backgroundColor} />
-          <Footer />
-          {/* <div className="h-screen"></div> */}
+        <div className="relative top-0 hidden md:block max-w-[1920px]">
+          <div className="relative" ref={container}>
+            <Section1 scrollYProgress={scrollYProgress} />
+            <Section2 scrollYProgress={scrollYProgress} />
+          </div>
+          <div className="">
+            <Section3 backgroundColor={backgroundColor} setop={setop} />
+            <Section4 backgroundColor={backgroundColor} />
+            <Trippy setop={setop} />
+            <Horizontal backgroundColor={backgroundColor} setop={setop} />
+            <Certificate backgroundColor={backgroundColor} />
+            <Footer />
+            {/* <div className="h-screen"></div> */}
+          </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -132,14 +144,14 @@ function Section1({ scrollYProgress }) {
       ref={conRef}
       className={`${
         isLoading ? "h-[300vh] " : "h-screen"
-      } transition-all duration-1000 ease-out  w-full  sticky top-0`}
+      } transition-all duration-1000  w-full  sticky top-0`}
     >
       <div className=" relative bottom-0 w-fit h-full left-1/2 -translate-x-1/2">
         <motion.img
           style={{ translateY }}
           src={people1}
           alt="person"
-          className="h-full  object-contain max-w-[804px]"
+          className="h-full  object-contain object-bottom max-w-[804px]"
         />
         <div className="absolute top-60 -left-20">
           <CircleSec1 text="Raihan Yusuf • ehancup •" size={200} />
@@ -383,6 +395,7 @@ function Section3({ backgroundColor, setop }) {
     "/icon/react-grey.svg",
     "/icon/nextjs-grey.svg",
     "/icon/nestjs-grey.svg",
+    "/icon/go-grey.svg",
     "/icon/kafka-grey.svg",
     "/icon/python-grey.svg",
     "/icon/mysql-grey.svg",
@@ -476,7 +489,7 @@ function Section4({ backgroundColor }) {
   const canvasRef = useRef(null);
   const { scrollYProgress: carouselProgress } = useScroll({
     target: carouselRef,
-    offset: ["start start", "end end"],
+    offset: ["start 0.7", "end 0.8"],
   });
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -554,7 +567,7 @@ function Section4({ backgroundColor }) {
   }, [currentIndex, render]);
   return (
     <motion.section
-      className="h-[500vh] w-full relative bg-red-500"
+      className="h-[100vh] w-full relative bg-red-500"
       ref={carouselRef}
     >
       <motion.div
@@ -562,10 +575,10 @@ function Section4({ backgroundColor }) {
         ref={ref}
         className="h-screen w-full top-0 sticky grid place-items-center"
       >
-        <motion.div
+        {/* <motion.div
           style={{ scaleX: carouselProgress }}
           className=" origin-right absolute w-full top-0 h-2 bg-greyal inset-x-0"
-        ></motion.div>
+        ></motion.div> */}
         <div className=" flex flex-col w-full items-center justify-center gap-10">
           <motion.div
             style={{ translateY: transText }}
@@ -614,9 +627,13 @@ function Trippy({ setop }) {
   useEffect(() => {
     scrollYProgress.on("change", (value) => setop(1 - value));
   });
-  const scale = useTransform(scrollYProgress, [0.02, 0.5, 1], [1, 50, 123.8]);
+  const scale = useTransform(scrollYProgress, [0.02, 0.5, 1], [1, 50, 130]);
+  const scaleLogo = useTransform(scrollYProgress, [0.02, 0.5, 1], [0, 0.5, 1]);
   const translateY = useTransform(scrollYProgress, [0.02, 1], [0, 4000]);
-  const translateX = useTransform(scrollYProgress, [0.02, 1], [0, 48]);
+  const translateX = useTransform(scrollYProgress, [0.02, 1], [0, 38]);
+  const translateYLogo = useTransform(scrollYProgress, [0.02, 1], [-4000, 0]);
+  const translateXLogo = useTransform(scrollYProgress, [0.02, 1], [-48, 0]);
+
   const { scrollYProgress: bgYProgress } = useScroll({
     target: bgRef,
     offset: ["center end", "end end"],
@@ -640,6 +657,14 @@ function Trippy({ setop }) {
             PROJECTS
           </motion.p>
         </motion.div>
+        <div className="w-full h-screen absolute top-0 left-0 grid place-items-center">
+          <motion.div
+            className="h-96 w-96 origin-center"
+            style={{ scale: scaleLogo }}
+          >
+            <img src={hp} alt="" className="h-full w-full object-contain" />
+          </motion.div>
+        </div>
       </div>
     </div>
   );
@@ -760,6 +785,25 @@ function Horizontal({ backgroundColor, setop }) {
             {projects.map((k, i) => (
               <ProjectCard key={i} {...k} />
             ))}
+            <div className="w-96 aspect-[16/18] bg-whiteal rounded-xl group/project overflow-hidden ">
+              <div className="h-96 aspect-[16/18] absolute flex justify-center items-center translate-x-0 group-hover/project:translate-x-96 transition-all duration-300">
+                <p className="text-7xl font-roslindale-bold text-whiteal">
+                  See All
+                </p>
+              </div>
+              <div className="w-full h-full relative">
+                <div className="w-full h-full bg-whiteal flex flex-col justify-center items-center translate-x-0 group-hover/project:translate-x-96 transition-all duration-300">
+                  <p className="text-7xl font-roslindale-bold text-greyal">
+                    See All
+                  </p>
+                </div>
+                <div className="w-96 aspect-[16/18] rounded-xl bg-whiteal -translate-x-96 group-hover/project:translate-x-0 transition-all duration-300 absolute top-0 flex flex-col justify-center items-center">
+                  <p className="text-7xl font-roslindale-bold text-greyal text-center">
+                    Click <br />here
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </motion.div>
@@ -779,8 +823,9 @@ function Certificate({ backgroundColor }) {
         </h1>
       </div>
       <div className="flex flex-col">
-        <CertiCard />
-        <CertiCard />
+        {
+          certificates.map((data, i) => <CertiCard data={data} key={i} />)
+        }
       </div>
     </motion.section>
   );
@@ -819,6 +864,7 @@ function Footer() {
   const translateButton = useTransform(scrollYProgress, [0, 1], [500, 0]);
   const borderButton = useTransform(scrollYProgress, [0, 1], [250, 0]);
   const opacityButton = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const scaleCurve = useTransform(scrollYProgress, [0, 1], ["20rem", "0rem"]);
   const borderRadius = useTransform(
     scrollYProgress,
     [0, 1],
@@ -866,19 +912,25 @@ function Footer() {
   return (
     <div className="h-[200vh]" ref={trippyRef}>
       <div className="h-screen bg-greyal flex flex-col sticky top-0 ">
-        <motion.div
-          className="absolute top-0 w-full h-screen bg-whiteal flex items-center justify-center origin-top z-10 "
-          style={{ height, borderRadius }}
-        >
-          <motion.p
-            initial={{ opacity: 0, y: 150 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="text-8xl font-roslindale-reg text-greyal"
+        <div className="absolute top-0 flex flex-col w-full z-10 h-fit ">
+          <motion.div
+            className=" w-full h-screen bg-whiteal flex items-center justify-center origin-top z-20  "
+            style={{ height, borderRadius }}
           >
-            Let&apos;s work together!
-          </motion.p>
-        </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 150 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="text-8xl font-roslindale-reg text-greyal"
+            >
+              Let&apos;s work together!
+            </motion.p>
+          </motion.div>
+          <motion.div
+            style={{ height: scaleCurve }}
+            className="w-full curve bg-whiteal origin-top drop-shadow-xl"
+          ></motion.div>
+        </div>
         <div className="flex-1"></div>
         <div className="flex-[2] flex flex-col justify-between px-20 py-10">
           <div className="flex flex-row pt-32 justify-center gap-10">
