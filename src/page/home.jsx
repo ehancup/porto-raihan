@@ -28,6 +28,7 @@ import NewButt from "../components/newButt";
 import { throttle } from "lodash";
 import { certificates } from "../data/cetificate";
 import transition from "../transition.jsx";
+import { NavLink } from "react-router-dom";
 
 function Home() {
   const container = useRef(null);
@@ -232,7 +233,7 @@ function Section2({ scrollYProgress }) {
           <div className="flex flex-col text-whiteal mt-5 gap-2">
             <div className="flex flex-row items-center gap-2">
               <EnvelopeIcon className="h-5" />
-              <p className="font-varela text-lg">mondokskuy19@gmail.com</p>
+              <p className="font-varela text-lg">rhanysuf24@gmail.com</p>
             </div>
             <div className="flex flex-row items-center gap-2">
               <MapPinIcon className="h-5" />
@@ -240,7 +241,7 @@ function Section2({ scrollYProgress }) {
             </div>
             <div className="flex flex-row items-center gap-2">
               <DevicePhoneMobileIcon className="h-5" />
-              <p className="font-varela text-lg">mondokskuy19@gmail.com</p>
+              <p className="font-varela text-lg">{"(+62) 821-1814-1284"}</p>
             </div>
           </div>
         </motion.div>
@@ -313,7 +314,7 @@ function Section3({ backgroundColor, setop }) {
   }, [scrollYProgress, setop]);
 
   // const backgroundColor = useTransform(scrollYProgress, [0,1], ["#252222", "#f7f7ef"])
-  const x = useTransform(carouselProgress, [0, 1], ["0%", "-170%"]);
+  const x = useTransform(carouselProgress, [0, 1], ["0%", "-175%"]);
   const imageY = useTransform(transProgress, [0, 1], [300, -300]);
 
   const images = useMemo(() => {
@@ -785,7 +786,7 @@ function Horizontal({ backgroundColor, setop }) {
             {projects.map((k, i) => (
               <ProjectCard key={i} {...k} />
             ))}
-            <div className="w-96 aspect-[16/18] bg-whiteal rounded-xl group/project overflow-hidden ">
+            <NavLink to={"/projects"} className="w-96 aspect-[16/18] bg-whiteal rounded-xl group/project overflow-hidden cursor-pointer ">
               <div className="h-96 aspect-[16/18] absolute flex justify-center items-center translate-x-0 group-hover/project:translate-x-96 transition-all duration-300">
                 <p className="text-7xl font-roslindale-bold text-whiteal">
                   See All
@@ -803,7 +804,7 @@ function Horizontal({ backgroundColor, setop }) {
                   </p>
                 </div>
               </div>
-            </div>
+            </NavLink>
           </motion.div>
         </div>
       </motion.div>
@@ -812,16 +813,24 @@ function Horizontal({ backgroundColor, setop }) {
 }
 
 function Certificate({ backgroundColor }) {
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  })
+  const translateY = useTransform(scrollYProgress, [0, 1], [500, -500]);
   return (
     <motion.section
       style={{ backgroundColor }}
       className="min-h-screen w-full px-44 pt-44 flex flex-row justify-between"
+      ref={ref}
     >
-      <div className="">
+      <motion.div className="" style={{ translateY }}>
         <h1 className="font-roslindale-reg text-7xl text-greyal">
           Certificate
         </h1>
-      </div>
+      </motion.div>
       <div className="flex flex-col">
         {
           certificates.map((data, i) => <CertiCard data={data} key={i} />)
@@ -831,7 +840,7 @@ function Certificate({ backgroundColor }) {
   );
 }
 
-function Footer() {
+export function Footer() {
   const trippyRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: trippyRef,
@@ -921,7 +930,7 @@ function Footer() {
               initial={{ opacity: 0, y: 150 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="text-8xl font-roslindale-reg text-greyal"
+              className="text-8xl font-monsieur text-greyal"
             >
               Let&apos;s work together!
             </motion.p>
@@ -979,7 +988,7 @@ function Footer() {
                   damping: 15,
                   mass: 0.1,
                 }}
-                className="w-52 h-52 bg-whiteal/50 rounded-full relative group/rdbtn flex items-center justify-center"
+                className="w-52 h-52 bg-whiteal/75 rounded-full relative group/rdbtn flex items-center justify-center"
               >
                 <div className="absolute  h-full w-full bg-whiteal rounded-full top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 origin-center scale-0 group-hover/rdbtn:scale-100 transition-all duration-300"></div>
                 <motion.p
@@ -993,9 +1002,9 @@ function Footer() {
                     damping: 15,
                     mass: 0.1,
                   }}
-                  className="font-roslindale-reg text-greyal relative text-xl"
+                  className="font-roslindale-reg text-greyal relative text-2xl"
                 >
-                  download CV
+                  Download CV
                 </motion.p>
               </motion.a>
             </div>

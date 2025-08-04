@@ -29,7 +29,7 @@ export const Navbar = () => {
       <motion.div variants={variants} animate={isActive ? "open" : "closed"} initial="closed" className="w-[480px] h-[650px] bg-whiteal rounded-3xl relative border-4 border-greyal">
         <AnimatePresence>
 
-        {isActive && <NavMenu/>}
+        {isActive && <NavMenu onNavigate={() => setIsActive(false)}/>}
         </AnimatePresence>
       </motion.div>
       <Buttnav isActive={isActive} setIsActive={setIsActive}/>

@@ -19,6 +19,7 @@ export default {
         'bodoni' : ["Bodoni Moda"],
         'roslindale-bold': ["Roslindale Bold"],
         'roslindale-reg': ["Roslindale Regular"],
+        'monsieur': ["Cookie"],
       },
       animation: {
         'spin-slow' : `spin 20s linear infinite`,

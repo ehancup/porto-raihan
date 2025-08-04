@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
 let links = [
   {
@@ -15,7 +16,7 @@ let links = [
   },
   {
     title: "Contacts",
-    href: "/",
+    href: "/Contact",
   },
 ];
 let footer = [
@@ -83,7 +84,7 @@ const slideIn = {
   },
 };
 
-function NavMenu() {
+function NavMenu({onNavigate}) {
   return (
     <div className="h-full pt-[100px] pb-[50px] px-10 box-border flex flex-col justify-between">
       <div className="flex flex-col gap-6">
@@ -101,13 +102,14 @@ function NavMenu() {
                 initial="initial"
                 className=""
               >
-                <a
-                  href={link.href}
-                  className="text-greyal no-underline text-5xl font-varela w-fit h-fit flex items-center justify-center group-hover/navmenu:[transform:rotateX(90deg)] transition-[transform] ease-[cubic-bezier(0.76,0,0.24,1)] duration-500 [transform-style:preserve-3d]"
+                <NavLink
+                  to={link.href}
+                  className="text-greyal no-underline   w-fit h-fit flex items-start justify-start group-hover/navmenu:[transform:rotateX(90deg)] transition-[transform] ease-[cubic-bezier(0.76,0,0.24,1)] duration-500 [transform-style:preserve-3d]"
+                  onClick={() => onNavigate()}
                 >
-                  <span className="group-hover/navmenu:-translate-y-full group-hover/navmenu:opacity-0 transition-all ease-[cubic-bezier(0.76,0,0.24,1)] duration-500 [transform-style:preserve-3d]">{link.title}</span>
-                  <span className="absolute [transform:rotateX(-90deg)]  opacity-0 group-hover/navmenu:opacity-100 transition-all ease-[cubic-bezier(0.76,0,0.24,1)] duration-500 [transform-style:preserve-3d]">{link.title}</span>
-                </a>
+                  <span className="group-hover/navmenu:-translate-y-full font-varela text-5xl group-hover/navmenu:opacity-0 transition-all ease-[cubic-bezier(0.76,0,0.24,1)] duration-500 [transform-style:preserve-3d]">{link.title}</span>
+                  <span className="absolute [transform:rotateX(-90deg)] font-monsieur text-6xl  opacity-0 group-hover/navmenu:opacity-100 transition-all ease-[cubic-bezier(0.76,0,0.24,1)] duration-500 [transform-style:preserve-3d]">{link.title}</span>
+                </NavLink>
               </motion.div>
             </div>
           );

@@ -14,9 +14,18 @@ import Comp from "./page/comp";
 import Projects from "./page/projects";
 import { AnimatePresence } from "framer-motion";
 import Transition from "./transition";
+import Contact from "./page/contact";
 
 function AnimatedRoutes() {
   const location = useLocation();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [location]);
 
   return (
     <AnimatePresence mode="wait">
@@ -42,6 +51,14 @@ function AnimatedRoutes() {
           element={
             <Transition>
               <Projects />
+            </Transition>
+          }
+        />
+        <Route
+          path="/Contact"
+          element={
+            <Transition>
+              <Contact />
             </Transition>
           }
         />
