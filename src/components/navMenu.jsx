@@ -12,11 +12,11 @@ let links = [
   },
   {
     title: "Certificates",
-    href: "/",
+    href: "/certificate",
   },
   {
     title: "Contacts",
-    href: "/Contact",
+    href: "/contact",
   },
 ];
 let footer = [

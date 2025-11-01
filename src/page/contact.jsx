@@ -2,6 +2,8 @@ import { useRef } from "react";
 import { Footer } from "./home";
 import emailjs from "@emailjs/browser";
 import { Toaster, toast } from "react-hot-toast";
+import { useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function Contact() {
   const form = useRef();
@@ -32,11 +34,25 @@ export default function Contact() {
       );
   };
 
+  const ref = useRef(null);
+
+  const {scrollYProgress} = useScroll({
+    target: ref,
+    offset: ["end end", "end start"],
+  })
+
+  const trKata = useTransform(scrollYProgress, [0, 1], [0, -500]);
+  const grKata = useTransform(scrollYProgress, [0, 1], [0, -300]);
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" >
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="flex items-center justify-center h-screen bg-whiteal">
+      <div className="flex flex-row gap-20 items-center justify-center h-screen bg-whiteal" ref={ref}>
         {/* <h1 className="text-4xl font-bold text-greyal">Contact Page</h1> */}
+        <motion.div className="" style={{translateY: trKata}}>
+          <p className="text-9xl font-monsieur">Feel free <br />to email me</p>
+        </motion.div>
+        <motion.div className="h-96 w-1 bg-greyal" style={{translateY: grKata}}></motion.div>
         <form
           ref={form}
           onSubmit={sendEmail}
@@ -96,7 +112,7 @@ export default function Contact() {
                 value="Send"
                 class="inline-flex items-center py-2.5 px-4 text- font-medium text-center text-greyal bg-whiteal rounded-lg focus:ring-4 focus:ring-whiteal  hover:bg-whiteal/75"
               >
-                Post comment
+                Send Email
               </button>
               
             </div>

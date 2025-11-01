@@ -812,7 +812,7 @@ function Horizontal({ backgroundColor, setop }) {
   );
 }
 
-function Certificate({ backgroundColor }) {
+export function Certificate({ backgroundColor }) {
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -871,6 +871,9 @@ export function Footer() {
   const height = useTransform(scrollYProgress, [0, 1], ["100vh", "33vh"]);
   const translateBottom = useTransform(scrollYProgress, [0, 1], [200, 0]);
   const translateButton = useTransform(scrollYProgress, [0, 1], [500, 0]);
+  const translateYCV = useTransform(scrollYProgress, [0, 1], [-500, 0]);
+  const translateXCV = useTransform(scrollYProgress, [0, 1], [300, 0]);
+
   const borderButton = useTransform(scrollYProgress, [0, 1], [250, 0]);
   const opacityButton = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const scaleCurve = useTransform(scrollYProgress, [0, 1], ["20rem", "0rem"]);
@@ -913,10 +916,10 @@ export function Footer() {
 
   // const { x, y } = position;
 
-  useEffect(() => {
-    console.log("Position:", position);
-    console.log("isHovered:", isHovered);
-  }, [position, isHovered]);
+  // useEffect(() => {
+  //   console.log("Position:", position);
+  //   console.log("isHovered:", isHovered);
+  // }, [position, isHovered]);
 
   return (
     <div className="h-[200vh]" ref={trippyRef}>
@@ -957,17 +960,17 @@ export function Footer() {
                 className="flex flex-row w-full gap-5 mt-5 "
               >
                 <NewButt
-                  title={"+62 812-9423-8988 (WA)"}
-                  href={"https://wa.link/st3kww"}
+                  title={"+62 821-1814-1284 (WA)"}
+                  href={"https://wa.link/3js4pl"}
                 />
                 <NewButt
-                  title={"mondokskuy@gmail.com"}
-                  href={"mailto:mondokskuy19@gmail.com"}
+                  title={"rhanysuf24@gmail.com"}
+                  href={"mailto:rhanysuf24@gmail.com"}
                 />
               </motion.div>
             </div>
 
-            <div className="">
+            <motion.div className="" style={{ translateY: translateYCV, translateX: translateXCV }}>
               <motion.a
                 href="/CV_RAIHAN.pdf"
                 target="_blank"
@@ -1007,7 +1010,7 @@ export function Footer() {
                   Download CV
                 </motion.p>
               </motion.a>
-            </div>
+            </motion.div>
           </div>
           <motion.div
             className="flex flex-row w-full justify-between"

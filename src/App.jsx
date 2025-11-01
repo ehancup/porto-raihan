@@ -15,6 +15,7 @@ import Projects from "./page/projects";
 import { AnimatePresence } from "framer-motion";
 import Transition from "./transition";
 import Contact from "./page/contact";
+import CertificatePage from "./page/certificate";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -55,10 +56,18 @@ function AnimatedRoutes() {
           }
         />
         <Route
-          path="/Contact"
+          path="/contact"
           element={
             <Transition>
               <Contact />
+            </Transition>
+          }
+        />
+        <Route
+          path="/certificate"
+          element={
+            <Transition>
+              <CertificatePage />
             </Transition>
           }
         />
